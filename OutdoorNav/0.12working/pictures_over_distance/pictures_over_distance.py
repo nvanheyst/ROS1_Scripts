@@ -45,11 +45,6 @@ if __name__ == '__main__':
 
     while not rospy.is_shutdown():
         distance = 2
-
-        # if initial_distance ==0:
-        #     initial_distance = math.sqrt(x_pos**2+y_pos**2)
-
-        # actual_distance = math.sqrt(x_pos**2+y_pos**2) - initial_distance
         
         if (distance_travelled>=distance):
             file_name = str(datetime.now()) + ".jpg"
@@ -61,17 +56,6 @@ if __name__ == '__main__':
             cv.imwrite(img_path, img)
             
             distance_travelled = 0
-
-        # if (actual_distance>=distance):
-        #     file_name = str(datetime.now()) + ".jpg"
-        #     img = captureSnapshot()
-        #     dir = "/home/administrator/nathan_ws/pictures/"
-        #     img_path = dir + file_name
-
-        #     print("Saving file {}".format(img_path))
-        #     cv.imwrite(img_path, img)
-            
-        #     initial_distance = 0
 
         rate.sleep()
 
