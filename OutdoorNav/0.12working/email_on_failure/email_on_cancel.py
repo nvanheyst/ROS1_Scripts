@@ -11,7 +11,7 @@ import smtplib, ssl
 
 port = 465  
 smtp_server = "smtp.gmail.com"
-password = "quya pzra arwe uogo"
+password = #password hidden
 sender_email = "huskyobserver@gmail.com"  
 receiver_email = "huskyobserver+python@gmail.com"  
 #receiver_email2 = "huskyobserver+python2@gmail.com"  
