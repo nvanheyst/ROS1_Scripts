@@ -36,7 +36,7 @@ def captureThermalImg():
 
 def main():
     saveImageQ62()
-    captureThermalImg
+    captureThermalImg()
     
 if __name__ == '__main__':
     main()
