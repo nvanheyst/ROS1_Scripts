@@ -9,7 +9,7 @@ import time
 import smtplib
 from email.message import EmailMessage
 
-password = "quya pzra arwe uogo"
+password = #password hidden
 robot = "Marketing Observer (CPR-Hicks)"
 
 
