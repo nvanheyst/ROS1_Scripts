@@ -9,7 +9,7 @@ from nav_msgs.msg import Odometry
 class Driver:
 
     def __init__(self):
-        rospy.init_node('undock')
+        rospy.init_node('test_drive')
         self.pub = rospy.Publisher('cmd_vel',Twist, queue_size=10)
         rospy.Subscriber('odom', Odometry, self.odomCB)
         self.rate = rospy.Rate(10)
