@@ -81,6 +81,8 @@ class SquarePath:
             # this will only normalize a non zero value
             if angle_turned != 0:
                 angle_turned = (angle_turned + 2 * 3.14159) % (2 * 3.14159)
+            #uncomment the following line to debug if needed
+            #rospy.loginfo(angle_turned)
             self.rate.sleep() 
 
         vel_msg.angular.z = 0
