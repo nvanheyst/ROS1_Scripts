@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+# a simple program to turn a robot 90 degrees counter clockwise
+# developed and tested on a Clearpath Ridgeback in Simulation, not for use on a real platform without additional review and testing
+# considerations - no obstacle detection, only using wheel encoder data
+
 import rospy
 
 from tf.transformations import euler_from_quaternion
@@ -14,12 +18,12 @@ class Driver:
         rospy.init_node('test_drive')
         self.pub = rospy.Publisher('cmd_vel',Twist, queue_size=10)
         rospy.Subscriber('odom', Odometry, self.odomCB)
-        self.rate = rospy.Rate(10)
+        self.rate = rospy.Rate(100)
         self.twist = Twist()
-        self.rotation_speed = 0.5
+        self.rotation_speed = 0.1
         self.current_yaw = 0.0
         self.tolerance = 0.98
-        self.goal = math.pi*2*self.tolerance
+        self.goal = math.pi/2*self.tolerance
         self.initial_yaw = None
         rospy.loginfo(self.goal)
 
