@@ -5,6 +5,9 @@
 #press s to stop the robot
 #press esc to kill the node
 
+# developed and tested on a Clearpath Ridgeback in Simulation, not for use on a real platform without additional review and testing
+# considerations - no obstacle detection
+
 import rospy
 from geometry_msgs.msg import Twist
 import pygame
