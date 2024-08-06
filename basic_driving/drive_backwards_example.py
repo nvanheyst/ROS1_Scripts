@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+# a simple program to drive a robot backwards 1 metre
+# developed and tested on a Clearpath Ridgeback in Simulation, not for use on a real platform without additional review and testing
+# considerations - no obstacle detection, only using wheel encoder data
+
 import rospy
 
 from geometry_msgs.msg import Twist
@@ -16,7 +20,6 @@ class Driver:
         self.twist = Twist()
         self.driving_speed = 0.19
         self.current_x = 0.0
-        #self.tolerance = 0.98
         self.goal = -1
         rospy.loginfo(self.goal)
 
