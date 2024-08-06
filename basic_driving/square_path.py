@@ -18,7 +18,10 @@ class SquarePath:
         #change '/odom' to appropriate odom message
         #can use IMU data or '/odometry/filtered' as alternatives (may or may not be better than just wheel oncoder data)
         self.odom_subscriber = rospy.Subscriber('/odom', Odometry, self.odom_callback)
+
+        #rate and tolerance increased to improve accuracy
         self.rate = rospy.Rate(100)
+        self.tolerance = 0.99
 
         self.pose = Odometry()
         self.yaw = 0
