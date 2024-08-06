@@ -77,7 +77,7 @@ class SquarePath:
         while angle_turned<angle:
             self.velocity_publisher.publish(vel_msg)
             angle_turned = self.yaw - start_yaw
-            # ocassionally angle_turned normalizes from 0 to 2PI and then it skips through or -2PI and then it turns forever
+            # ocassionally angle_turned normalizes from 0 to 2PI and then it skips through or -2PI and then it turns past PI/2
             # this will only normalize a non zero value
             if angle_turned != 0:
                 angle_turned = (angle_turned + 2 * 3.14159) % (2 * 3.14159)
