@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+# an example of a staged approach to driving to a position goal. starts faster and slows as it approaches the target position.
+# developed and tested on a Clearpath Ridgeback in Simulation, not for use on a real platform without additional review and testing
+# considerations - no obstacle detection, only using wheel encoder data
+
 import rospy
 
 from geometry_msgs.msg import Twist
