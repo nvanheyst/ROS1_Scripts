@@ -20,9 +20,9 @@ class Driver:
         rospy.Subscriber('odom', Odometry, self.odomCB)
         self.rate = rospy.Rate(100)
         self.twist = Twist()
-        self.rotation_speed = 0.1
+        self.rotation_speed = 0.15
         self.current_yaw = 0.0
-        self.tolerance = 0.98
+        self.tolerance = 0.99
         self.goal = math.pi/2*self.tolerance
         self.initial_yaw = None
         rospy.loginfo(self.goal)
