@@ -13,20 +13,24 @@ from tf.transformations import euler_from_quaternion
 class SquarePath:
     def __init__(self):
         rospy.init_node('square_path')
+        #change '/cmd_vel' to appropriate velocity message
         self.velocity_publisher = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
+        #change '/odom' to appropriate odom message
+        #can use IMU data or '/odometry/filtered' as alternatives (may or may not be better than just wheel oncoder data)
         self.odom_subscriber = rospy.Subscriber('/odom', Odometry, self.odom_callback)
         self.rate = rospy.Rate(100)
 
         self.pose = Odometry()
         self.yaw = 0
 
+        #side length and speeds reduced from previous version
         self.side_length = 0.5  
         self.linear_speed = 0.19  
         self.angular_speed = 0.1 
         self.turn_angle = math.pi/2
         self.tolerance = 0.99
         self.goal = self.turn_angle * self.tolerance
-
+        #change '/odom' to appropriate odom message
         rospy.wait_for_message('/odom', Odometry)
         self.run_square_path()
 
@@ -70,9 +74,10 @@ class SquarePath:
         while angle_turned<angle:
             self.velocity_publisher.publish(vel_msg)
             angle_turned = self.yaw - start_yaw
-            if angle turned != 0:
+            # ocassionally angle_turned normalizes from 0 to 2PI and then it skips through
+            # this will only normalize a non zero value
+            if angle_turned != 0:
                 angle_turned = (angle_turned + 2 * 3.14159) % (2 * 3.14159)
-            # rospy.loginfo(angle_turned)
             self.rate.sleep() 
 
         vel_msg.angular.z = 0
