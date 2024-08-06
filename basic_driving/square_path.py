@@ -77,11 +77,11 @@ class SquarePath:
         while angle_turned<angle:
             self.velocity_publisher.publish(vel_msg)
             angle_turned = self.yaw - start_yaw
-            # ocassionally angle_turned normalizes from 0 to 2PI and then it skips through
+            # ocassionally angle_turned normalizes from 0 to 2PI and then it skips through or -2PI and then it turns forever
             # this will only normalize a non zero value
             if angle_turned != 0:
                 angle_turned = (angle_turned + 2 * 3.14159) % (2 * 3.14159)
-            #uncomment the following line to debug if needed
+            #uncomment the following line to help with debugging if needed
             #rospy.loginfo(angle_turned)
             self.rate.sleep() 
 
