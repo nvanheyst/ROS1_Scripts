@@ -38,13 +38,16 @@ class Driver:
             while angle_turned<self.goal:
                 self.pub.publish(self.twist)
                 angle_turned = self.current_yaw - self.initial_yaw
-                angle_turned = (angle_turned + 2 * 3.14159) % (2 * 3.14159)
+
+                if angle_turned > 0:
+                    angle_turned = (angle_turned + 2 * 3.14159) % (2 * 3.14159)
 
                 rospy.loginfo(angle_turned)
                 self.rate.sleep()   
 
             self.twist.angular.z = 0
             self.pub.publish(self.twist)  
+            rospy.logwarn("COMPLETE")
             break   
 
     def odomCB(self,msg):        
