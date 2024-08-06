@@ -26,7 +26,7 @@ class SquarePath:
         #side length and speeds reduced from previous version
         self.side_length = 0.5  
         self.linear_speed = 0.19  
-        self.angular_speed = 0.1 
+        self.angular_speed = 0.15 
         self.turn_angle = math.pi/2
         self.tolerance = 0.99
         self.goal = self.turn_angle * self.tolerance
