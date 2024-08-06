@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+# a simple program to drive a robot on a square path
+# developed and tested on a Clearpath Ridgeback in Simulation, not for use on a real platform without additional review and testing
+# considerations - no obstacle detection, only using wheel encoder data
+
 import rospy
 from geometry_msgs.msg import Twist
 from nav_msgs.msg import Odometry
@@ -11,16 +15,16 @@ class SquarePath:
         rospy.init_node('square_path')
         self.velocity_publisher = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
         self.odom_subscriber = rospy.Subscriber('/odom', Odometry, self.odom_callback)
-        self.rate = rospy.Rate(10)
+        self.rate = rospy.Rate(100)
 
         self.pose = Odometry()
         self.yaw = 0
 
-        self.side_length = 1.0  
-        self.linear_speed = 0.2  
-        self.angular_speed = 0.2 
+        self.side_length = 0.5  
+        self.linear_speed = 0.19  
+        self.angular_speed = 0.1 
         self.turn_angle = math.pi/2
-        self.tolerance = 0.98
+        self.tolerance = 0.99
         self.goal = self.turn_angle * self.tolerance
 
         rospy.wait_for_message('/odom', Odometry)
