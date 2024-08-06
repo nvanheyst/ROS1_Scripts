@@ -39,7 +39,7 @@ class Driver:
                 self.pub.publish(self.twist)
                 angle_turned = self.current_yaw - self.initial_yaw
 
-                if angle_turned > 0:
+                if angle_turned != 0:
                     angle_turned = (angle_turned + 2 * 3.14159) % (2 * 3.14159)
 
                 rospy.loginfo(angle_turned)
