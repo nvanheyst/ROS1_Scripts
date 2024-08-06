@@ -70,8 +70,8 @@ class SquarePath:
         while angle_turned<angle:
             self.velocity_publisher.publish(vel_msg)
             angle_turned = self.yaw - start_yaw
-            angle_turned = (angle_turned + 2 * 3.14159) % (2 * 3.14159)
-            # rospy.loginfo(angle)
+            if angle turned != 0:
+                angle_turned = (angle_turned + 2 * 3.14159) % (2 * 3.14159)
             # rospy.loginfo(angle_turned)
             self.rate.sleep() 
 
