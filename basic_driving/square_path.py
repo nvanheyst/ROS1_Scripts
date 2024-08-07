@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # a simple program to drive a robot on a square path
-# developed and tested on a Clearpath Ridgeback in Simulation, not for use on a real platform without additional review and testing
+# developed and tested on a Clearpath Ridgeback and Husky in Simulation, not for use on a real platform without additional review and testing
 # considerations - no obstacle detection, only using wheel encoder data
 
 import rospy
@@ -14,27 +14,26 @@ class SquarePath:
     def __init__(self):
         rospy.init_node('square_path')
         #change '/cmd_vel' to appropriate velocity message
-        self.velocity_publisher = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
+        self.velocity_publisher = rospy.Publisher('/husky_velocity_controller/cmd_vel', Twist, queue_size=10)
         #change '/odom' to appropriate odom message
         #can use IMU data or '/odometry/filtered' as alternatives (may or may not be better than just wheel oncoder data)
-        self.odom_subscriber = rospy.Subscriber('/odom', Odometry, self.odom_callback)
+        self.odom_subscriber = rospy.Subscriber('/husky_velocity_controller/odom', Odometry, self.odom_callback)
 
         #rate and tolerance increased to improve accuracy
-        self.rate = rospy.Rate(100)
-        self.tolerance = 0.99
+        self.rate = rospy.Rate(10000)
+        self.tolerance = 0.995
 
         self.pose = Odometry()
         self.yaw = 0
 
         #side length and speeds reduced from previous version
         self.side_length = 0.5  
-        self.linear_speed = 0.19  
-        self.angular_speed = 0.15 
+        self.linear_speed = 0.1  
+        self.angular_speed = 0.1 
         self.turn_angle = math.pi/2
-        self.tolerance = 0.99
         self.goal = self.turn_angle * self.tolerance
         #change '/odom' to appropriate odom message
-        rospy.wait_for_message('/odom', Odometry)
+        rospy.wait_for_message('/husky_velocity_controller/odom', Odometry)
         self.run_square_path()
 
     def odom_callback(self, data):
@@ -47,7 +46,9 @@ class SquarePath:
             self.move_straight(self.side_length)
             rospy.sleep(0.1)  
             self.turn(self.goal)
-            rospy.sleep(0.1)  
+            rospy.sleep(0.1)
+
+        rospy.loginfo("Complete")  
 
     def move_straight(self, distance):
         vel_msg = Twist()
@@ -66,6 +67,7 @@ class SquarePath:
 
         vel_msg.linear.x = 0
         self.velocity_publisher.publish(vel_msg)
+        rospy.loginfo(distance_moved)
 
     def turn(self, angle):
         vel_msg = Twist()
@@ -81,12 +83,15 @@ class SquarePath:
             # this will only normalize a non zero value
             if angle_turned != 0:
                 angle_turned = (angle_turned + 2 * 3.14159) % (2 * 3.14159)
+            if angle_turned > 6 or angle_turned<-6:
+                angle_turned = 0
             #uncomment the following line to help with debugging if needed
             #rospy.loginfo(angle_turned)
             self.rate.sleep() 
 
         vel_msg.angular.z = 0
         self.velocity_publisher.publish(vel_msg)
+        rospy.loginfo(angle_turned*180/3.14159)
 
     def stop(self):
         vel_msg = Twist()
